@@ -441,7 +441,20 @@ h1 i { margin-right: 15px; color: #D2691E; }
     font-size: 0.75rem !important;
     padding: 6px 8px !important;
 }
-}</style>
+}
+															.library {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;           /* απόσταση μεταξύ βιβλίων */
+  justify-content: center; /* κεντράρισμα */
+}
+
+.book {
+  flex: 1 1 280px;     /* ελάχιστο πλάτος 280px, μεγαλώνει αν υπάρχει χώρος */
+  max-width: 300px;    /* μέγιστο πλάτος βιβλίου */
+  box-sizing: border-box;
+}
+	</style>
 															</head>
 															<body>
 																<div class="container">
@@ -877,3 +890,4 @@ return false;
 																</script>
 															</body>
 														</html>
+
