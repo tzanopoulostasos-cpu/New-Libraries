@@ -219,25 +219,16 @@
         grid-template-columns: 1fr;
       }
     }
-/* ====== ΣΤΑΘΕΡΗ ΔΙΑΤΑΞΗ 2×2 ΜΟΝΟ ΣΕ DESKTOP ΟΤΑΝ Η ΣΕΛΙΔΑ ΕΙΝΑΙ ΣΕ IFRAME ====== */
-
+/* ====== ΠΑΝΤΑ 2×2 ΜΕΣΑ ΣΕ IFRAME ====== */
 body.in-iframe .shelf-block {
   grid-template-columns: 1fr 1fr !important;
   grid-template-rows: 1fr 1fr !important;
 }
 
-/* ====== ΑΛΛΑ ΣΕ MOBILE (iframe κάτω από ~700px) ΕΠΙΤΡΕΠΟΥΜΕ ΤΗΝ ΚΑΤΑΚΟΡΥΦΗ ΔΙΑΤΑΞΗ ====== */
-
-@media (max-width: 700px) {
-  body.in-iframe .shelf-block {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: auto !important;
-  }
-}
-
-/* Προαιρετικά: απενεργοποίηση animation μέσα στο iframe */
-body.in-iframe .library {
-  animation: none !important;
+/* ====== ΑΛΛΑ ΣΕ ΠΡΑΓΜΑΤΙΚΟ MOBILE (device), ΟΧΙ ΑΠΛΑ ΜΙΚΡΟ IFRAME ====== */
+body.in-iframe.mobile-device .shelf-block {
+  grid-template-columns: 1fr !important;
+  grid-template-rows: auto !important;
 }
  </style>
   <script type="application/ld+json" id="schema-data"></script>
@@ -374,7 +365,8 @@ body.in-iframe .library {
     // Αρχική φόρτωση
     loadShelf('osc');
     generateSchema();
-  </script>
+
+ </script>
 <!-- Ο υπόλοιπος κώδικάς σου -->
 <script>
 // Απενεργοποίηση δεξιού κλικ
@@ -412,9 +404,18 @@ document.addEventListener('keydown', function(e) {
     }
 });
 </script>
+ <script>
+(function() {
+  const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+  if (isMobile) {
+    document.body.classList.add("mobile-device");
+  }
+})();
+</script>
 </body>
 
 </html>
+
 
 
 
