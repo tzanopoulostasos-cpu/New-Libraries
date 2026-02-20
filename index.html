@@ -219,10 +219,21 @@
         grid-template-columns: 1fr;
       }
     }
+/* ====== ΣΤΑΘΕΡΗ ΔΙΑΤΑΞΗ 2×2 ΟΤΑΝ Η ΣΕΛΙΔΑ ΦΟΡΤΩΝΕΤΑΙ ΜΕΣΑ ΣΕ IFRAME ====== */
+
+body.in-iframe .shelf-block {
+  grid-template-columns: 1fr 1fr !important;
+  grid-template-rows: 1fr 1fr !important;
+}
+
+/* Προαιρετικά: απενεργοποίηση animation μέσα στο iframe */
+body.in-iframe .library {
+  animation: none !important;
+}
  </style>
   <script type="application/ld+json" id="schema-data"></script>
 </head>
-<body>
+<body> <body class="in-iframe">
  <h1 class="main-title">
     ΠΑΝΕΛΛΑΔΙΚΕΣ Γ΄ ΛΥΚΕΙΟΥ
     <span>📖 ΘΕΜΑΤΙΚΗ ΨΗΦΙΑΚΗ ΒΙΒΛΙΟΘΗΚΗ</span>
@@ -395,4 +406,5 @@ document.addEventListener('keydown', function(e) {
 </body>
 
 </html>
+
 
