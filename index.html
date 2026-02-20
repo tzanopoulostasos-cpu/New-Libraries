@@ -214,11 +214,12 @@
       opacity: 1;
     }
 
-    @media (max-width: 700px) {
-      .shelf-block {
-        grid-template-columns: 1fr;
-      }
-    }
+   .shelf-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
 /* Desktop + mobile landscape → 2×2 */
 body.in-iframe.landscape .shelf-block {
   grid-template-columns: 1fr 1fr !important;
@@ -431,6 +432,7 @@ window.addEventListener("resize", updateLayout);
 </body>
 
 </html>
+
 
 
 
