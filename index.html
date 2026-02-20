@@ -405,35 +405,33 @@ document.addEventListener('keydown', function(e) {
 });
 
 <script>
-function updateLayoutForDevice() {
-  const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+function updateLayout() {
+  let parentWidth;
 
-  if (!isMobile) {
-    // Desktop → πάντα landscape
-    document.body.classList.add("landscape");
-    document.body.classList.remove("portrait");
-    return;
+  try {
+    parentWidth = window.parent.innerWidth;
+  } catch (e) {
+    parentWidth = window.innerWidth;
   }
 
-  // Mobile → orientation-based
-  const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-  if (isPortrait) {
-    document.body.classList.add("portrait");
-    document.body.classList.remove("landscape");
-  } else {
+  if (parentWidth > 500) {
     document.body.classList.add("landscape");
     document.body.classList.remove("portrait");
+  } else {
+    document.body.classList.add("portrait");
+    document.body.classList.remove("landscape");
   }
 }
 
-updateLayoutForDevice();
-window.addEventListener("orientationchange", updateLayoutForDevice);
-window.addEventListener("resize", updateLayoutForDevice);
+updateLayout();
+window.addEventListener("resize", updateLayout);
 </script>
+
 
 </body>
 
 </html>
+
 
 
 
