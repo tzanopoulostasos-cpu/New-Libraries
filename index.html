@@ -219,16 +219,18 @@
         grid-template-columns: 1fr;
       }
     }
-/* ====== ΠΑΝΤΑ 2×2 ΜΕΣΑ ΣΕ IFRAME ====== */
+/* ====== ΠΑΝΤΑ 2×2 ΣΕ LANDSCAPE ΟΤΑΝ Η ΣΕΛΙΔΑ ΕΙΝΑΙ ΣΕ IFRAME ====== */
 body.in-iframe .shelf-block {
   grid-template-columns: 1fr 1fr !important;
   grid-template-rows: 1fr 1fr !important;
 }
 
-/* ====== ΑΛΛΑ ΣΕ ΠΡΑΓΜΑΤΙΚΟ MOBILE (device), ΟΧΙ ΑΠΛΑ ΜΙΚΡΟ IFRAME ====== */
-body.in-iframe.mobile-device .shelf-block {
-  grid-template-columns: 1fr !important;
-  grid-template-rows: auto !important;
+/* ====== ΣΕ PORTRAIT (πραγματικό), ΟΧΙ ΑΠΛΑ ΣΤΕΝΟ IFRAME → 1×4 ====== */
+@media (orientation: portrait) {
+  body.in-iframe .shelf-block {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+  }
 }
  </style>
   <script type="application/ld+json" id="schema-data"></script>
@@ -403,18 +405,11 @@ document.addEventListener('keydown', function(e) {
         return false;
     }
 });
-</script>
- <script>
-(function() {
-  const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
-  if (isMobile) {
-    document.body.classList.add("mobile-device");
-  }
-})();
-</script>
+
 </body>
 
 </html>
+
 
 
 
