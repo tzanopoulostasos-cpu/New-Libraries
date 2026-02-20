@@ -235,29 +235,6 @@ body.in-iframe.portrait .shelf-block {
 .shelf-block {
   transform-origin: top center;
 }
-
-/* ΠΑΝΤΑ 2×2 */
-.shelf-block {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 26px;
-}
-
-/* Στο mobile portrait → οριζόντια κύλιση αντί για σμίκρυνση */
-@media (max-width: 600px) {
-  .shelf-block {
-    width: 1200px; /* φυσικό πλάτος 2×2 */
-    overflow-x: auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .library {
-    overflow-x: auto;
-  }
-}
-
  </style>
   <script type="application/ld+json" id="schema-data"></script>
 </head>
@@ -436,6 +413,7 @@ document.addEventListener('keydown', function(e) {
 </body>
 
 </html>
+
 
 
 
