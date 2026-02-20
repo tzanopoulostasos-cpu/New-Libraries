@@ -1,878 +1,396 @@
 <!DOCTYPE html>
 <html lang="el">
-	<head>
-		<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<meta name="description" content="Διαδραστική 3D βιβλιοθήκη για ταλαντώσεις - Φυσική, Μαθηματικά, Εκπαίδευση">
-					<meta name="keywords" content="ταλαντώσεις, φυσική, μαθηματικά, βιβλιοθήκη, 3D, εκπαίδευση, Ελλάδα">
-						<meta property="og:title" content="3D Βιβλιοθήκη Ταλαντώσεων - Δωρεάν Εκπαιδευτικό Εργαλείο">
-							<meta property="og:description" content="Διαδραστικό εκπαιδευτικό εργαλείο για φυσική και μαθηματικά">
-								<meta property="og:image" content="https://i.postimg.cc/QdCS3xsb/interactive-library.png">
-									<meta property="og:url" content="https://httpmyphysics.blogspot.com/">
-										<meta property="og:type" content="website">
-											<meta name="twitter:card" content="summary_large_image">
-												<meta name="twitter:title" content="3D Βιβλιοθήκη Ταλαντώσεων">
-													<meta name="twitter:description" content="Διαδραστική εκπαίδευση στη φυσική">
-														<meta name="twitter:image" content="https://i.imgur.com/HA0YgLN.png">
-															<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-																<title>3D Βιβλιοθήκη Ταλαντώσεων - Δωρεάν Εκπαιδευτικό Εργαλείο</title>																<style> 
-* { margin: 0; padding: 0; box-sizing: border-box; } 
-body { color: #e0e0e0; padding: 40px 20px; min-height: 100vh; font-family: 'Georgia', 'Times New Roman', serif; overflow-x: hidden; } 
-.container { max-width: 1200px; margin: 0 auto; background: rgba(30, 30, 46, 0.95); border-radius: 20px; padding: 25px 30px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6); border: 1px solid #3a3a5d; position: relative; } 
-h1 { text-align: center; color: #f0e6d2; margin-bottom: 5px; font-size: 2.2rem; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); letter-spacing: 1px; } 
-h1 i { margin-right: 15px; color: #D2691E; } 
-.subtitle { text-align: center; color: #b8b8b8; margin-bottom: 30px; font-size: 1rem; font-style: italic; } 
-.library-viewport { position: relative; overflow: hidden; margin: 60px 0; padding: 40px 0; background: #0f0f1a; border-radius: 12px; border: 1px solid #2a2a40; box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8); } 
-.shelves-track { display: flex; transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1); will-change: transform; } 
-.shelf-unit { min-width: 100%; position: relative; padding: 0 40px; flex-shrink: 0; } 
-.shelf-board { background: linear-gradient(to bottom, #8B4513 0%, #A0522D 20%, #8B4513 50%, #654321 80%, #5D4037 100%); height: 28px; border-radius: 4px 4px 0 0; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.7), inset 0 2px 4px rgba(255,255,255,0.1); border-top: 1px solid #D2691E; margin-bottom: 35px; } 
-.shelf-board-bottom { background: linear-gradient(to bottom, #5D4037 0%, #654321 30%, #8B4513 70%, #A0522D 100%); height: 24px; border-radius: 0 0 4px 4px; position: relative; margin-top: 20px; box-shadow: inset 0 -2px 4px rgba(255,255,255,0.05), 0 4px 10px rgba(0,0,0,0.5); border-bottom: 1px solid #654321; } 
-.shelf-board-floor { background: linear-gradient(to bottom, #3E2723, #5D4037); height: 10px; border-radius: 2px; margin-top: 8px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.6); } 
-.books-row { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, auto); gap: 35px; margin-top: 10px; padding: 0 30px; justify-items: center; align-items: start; max-width: 800px; margin-left: auto; margin-right: auto; } 
-.book { width: 100%; max-width: 170px; position: relative; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; z-index: 1; } 
-.book-spine { height: 230px; border-radius: 4px 2px 2px 4px; position: relative; box-shadow: inset 3px 0 6px rgba(0,0,0,0.3), 6px 6px 20px rgba(0,0,0,0.5); border-right: 2px solid rgba(0,0,0,0.2); overflow: hidden; filter: brightness(1.3) saturate(1.3) !important; } 
-.book-cover { position: absolute; top: 0; left: 100%; width: 320px; height: 100%; background-size: contain !important; background-position: center center !important; background-repeat: no-repeat !important; background-color: rgba(30, 30, 46, 0.95) !important; border-radius: 0 8px 8px 0; box-shadow: 10px 0 30px rgba(0,0,0,0.6), inset 3px 0 8px rgba(255,255,255,0.1); transform-origin: left; transform: perspective(700px) rotateY(-90deg); transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55); overflow: hidden; z-index: 10; border-left: 2px solid rgba(255,255,255,0.1); filter: brightness(1.4) saturate(1.4) !important; } 
-.book-cover::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient( to right, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 30%, transparent 60%, transparent 100% ); z-index: 1; pointer-events: none; border-radius: 0 8px 8px 0; } 
-.book.selected .book-cover { transform: perspective(700px) rotateY(-25deg) !important; filter: brightness(1.6) saturate(1.6) contrast(1.1) !important; } 
-.books-row .book.selected:nth-child(even) .book-cover { transform: perspective(700px) rotateY(-25deg) translateX(-50px) !important; } 
-.books-row .book:nth-child(even) .book-cover { left: auto; right: 100%; width: 280px; border-radius: 8px 0 0 8px; background-size: contain !important; background-position: center center !important; background-repeat: no-repeat !important; background-color: rgba(30, 30, 46, 0.95) !important; box-shadow: -10px 0 30px rgba(0,0,0,0.6), inset -3px 0 8px rgba(255,255,255,0.1); transform-origin: right; transform: perspective(700px) rotateY(90deg); border-left: none; border-right: 2px solid rgba(255,255,255,0.1); } 
-.books-row .book:nth-child(even) .book-cover::before { background: linear-gradient( to left, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 30%, transparent 60%, transparent 100% ); } 
-.books-row .book.selected:nth-child(even) .book-cover { transform: perspective(700px) rotateY(25deg) !important; filter: brightness(1.6) saturate(1.6) contrast(1.1) !important; } 
-.books-row .book:nth-child(even) .book-spine { border-radius: 2px 4px 4px 2px; border-left: 2px solid rgba(0,0,0,0.2); border-right: none; box-shadow: inset -3px 0 6px rgba(0,0,0,0.3), 6px 6px 20px rgba(0,0,0,0.5); } 
-.books-row .book.selected:nth-child(even) { transform: translateY(-20px) translateX(-15px) !important; } 
-.book.selected .book-spine { box-shadow: inset 3px 0 6px rgba(0,0,0,0.35), 10px 12px 30px rgba(0,0,0,0.7); } 
-.nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(139, 69, 19, 0.9); color: #f0e6d2; border: 2px solid #D2691E; width: 65px; height: 65px; border-radius: 50%; font-size: 1.9rem; cursor: pointer; z-index: 1000; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); } 
-.nav-arrow:hover { background: #8B4513; border-color: #f0e6d2; transform: translateY(-50%) scale(1.15); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8); } 
-.nav-arrow.left { left: 20px; } 
-.nav-arrow.right { right: 20px; } 
-.shelf-indicators { text-align: center; margin-top: 45px; } 
-.indicator { display: inline-block; width: 18px; height: 18px; background-color: #8B4513; border-radius: 50%; margin: 0 12px; cursor: pointer; transition: all 0.3s ease; border: 2px solid #D2691E; position: relative; } 
-.indicator.active { background: #f0e6d2; transform: scale(1.4); box-shadow: 0 0 20px rgba(240, 230, 210, 0.9); } 
-.indicator:hover { transform: scale(1.2); } 
-.action-buttons { display: flex; gap: 15px; justify-content: center; margin-top: 20px; flex-wrap: wrap; } 
-.action-btn { display: inline-block; background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%); color: #f0e6d2; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: all 0.4s ease; border: 2px solid #D2691E; box-shadow: 0 6px 15px rgba(0,0,0,0.4); letter-spacing: 0.5px; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7); font-family: 'Georgia', 'Times New Roman', serif; position: relative; overflow: hidden; min-width: 140px; text-align: center; } 
-.action-btn:hover { background: linear-gradient(135deg, #A0522D 0%, #8B4513 100%); color: #ffffff; transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.6); } 
-.download-btn { background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%); border-color: #3498db; } 
-.download-btn:hover { background: linear-gradient(135deg, #34495E 0%, #2C3E50 100%); } 
-#selectedBookInfo { text-align: center; margin-top: 30px; padding: 20px; background: rgba(26, 26, 46, 0.8); border-radius: 12px; border: 1px solid #3a3a5d; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); animation: fadeIn 0.5s ease-out; display: none; } 
-#selectedBookInfo h3 { color: #f0e6d2; margin-bottom: 15px; font-size: 1.4rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.7); } 
-#selectedBookInfo span { color: #D2691E; font-style: italic; } 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } } 
-.shelf-title { text-align: center; margin-bottom: 18px; font-size: 1.2rem; font-weight: bold; letter-spacing: 0.6px; color: #f0e6d2; background: linear-gradient(135deg, #3E2723, #5D4037); border: 2px solid #D2691E; border-radius: 8px; padding: 10px 22px; display: block; width: fit-content; margin-left: auto; margin-right: auto; box-shadow: 0 6px 15px rgba(0,0,0,0.6), inset 0 1px 3px rgba(255,255,255,0.1); text-shadow: 1px 1px 3px rgba(0,0,0,0.7); font-family: 'Georgia', 'Times New Roman', serif; max-width: 80%; word-wrap: break-word; text-align: center; } 
-.shelf-title::before { content: "ΘΕΜΑ:"; margin-right: 8px; color: #D2691E; font-weight: normal; font-size: 0.9rem; }
-//* ========== ΕΝΙΑΙΟ MOBILE PORTRAIT ========== */
-@media (max-width: 768px) and (orientation: portrait) {
-  /* Γενικές προσαρμογές */
-  body { padding: 15px 10px; }
-  .container { padding: 15px; border-radius: 15px; }
-  h1 { font-size: 1.8rem; }
-  .library-viewport { margin: 20px 0; padding: 20px 0; }
-  .nav-arrow { width: 50px; height: 50px; font-size: 1.5rem; }
-  .nav-arrow.left { left: 10px; }
-  .nav-arrow.right { right: 10px; }
-  .shelf-title { font-size: 1rem; padding: 8px 16px; max-width: 90%; white-space: normal; }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Πανελλαδικές Φυσική Γ΄ Λυκείου – Ψηφιακή Βιβλιοθήκη Θεμάτων</title>
+  <meta name="description" content="Δωρεάν ψηφιακή βιβλιοθήκη με θέματα Πανελλαδικών εξετάσεων στη Φυσική Γ΄ Λυκείου. Κρούση, Ταλαντώσεις, Κύματα, Στερεό, Ηλεκτρομαγνητισμός, Κβαντική. Λήψη Word & PDF.">
+  <meta name="keywords" content="Πανελλαδικές, Φυσική, Γ Λυκείου, θέματα, λύσεις, κρούση, ταλαντώσεις, κύματα, μηχανική στερεού, ηλεκτρομαγνητισμός, κβαντική">
+  <meta name="author" content="Η δική σου ομάδα">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://httpmyphysics.blogspot.com/p/greek-national-examination-topics.html">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <style>
+    body {
+      font-family: Georgia, serif;
+      color: #2c1e0e;
+      margin: 0;
+      padding: 20px;
+      }
+      
 
-  /* Section buttons - 2 στη σειρά */
-  .section-buttons {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    padding: 0 5px !important;
-  }
-  .section-btn {
-    min-width: auto !important;
-    width: calc(50% - 8px) !important;
-    font-size: 0.75rem !important;
-    padding: 8px 6px !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-  }
+    /* ΤΙΤΛΟΣ */
+    .main-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 600;
+      color: #8B5A3C;
+      margin-bottom: 8px;
+    }
+    .main-title span {
+      display: block;
+      font-size: 18px;
+      font-weight: 400;
+      color: #8B5A3C;
+      margin-top: 6px;
+    }
 
-  /* Βιβλία: μία στήλη */
-  .books-row {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 20px !important;
-    width: 100% !important;
-    max-width: 300px !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-  }
+    .intro-description {
+      max-width: 900px;
+      margin: 15px auto 35px auto;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #2c1e0e;
+      text-align: center;
+      padding: 0 15px;
+    }
 
-  .book {
-    max-width: 130px !important;
-    width: 130px !important;
-    margin: 0 auto !important;
-  }
-
-  .book-spine {
-    height: 190px !important;
-  }
-
-  /* Εξώφυλλα - μικρό πλάτος */
-  .book-cover,
-  .books-row .book:nth-child(even) .book-cover {
-    width: 100px !important;
-    background-size: contain !important;
-    background-position: center !important;
-  }
-
-  /* Επιλεγμένο βιβλίο - μόνο κατακόρυφη μετατόπιση */
-  .book.selected {
-    transform: translateY(-15px) !important;
-    margin-bottom: 25px !important;
-  }
-
-  /* Κουμπιά δράσης - εμφανίζονται μόνο όταν selected, κάτω από το βιβλίο */
-  .book-actions {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    transform: none !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 8px !important;
-    margin-top: 12px !important;
-    width: 100% !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transition: opacity 0.3s ease, visibility 0.3s ease !important;
-    pointer-events: none !important;
-  }
-
-  .book.selected .book-actions {
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-  }
-
-  .book-actions .action-btn {
-    min-width: 130px !important;
-    font-size: 0.85rem !important;
-    padding: 8px 12px !important;
-    white-space: normal !important;
-  }
-
-  /* Πολύ μικρές οθόνες */
-  @media (max-width: 400px) {
-    .book { max-width: 115px !important; width: 115px !important; }
-    .book-spine { height: 170px !important; }
-    .book-cover { width: 90px !important; }
-    .book-actions .action-btn { min-width: 110px !important; font-size: 0.75rem !important; padding: 6px 8px !important; }
-  }
-}
-/* ========== ΚΟΥΜΠΙΑ ΔΡΑΣΗΣ (BOOK-ACTIONS) ========== */
-.book-actions {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
-    z-index: 20;
-    pointer-events: none;
-}
-
-.book.selected .book-actions {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.book:nth-child(odd) .book-actions {
-    left: 100%;
-    margin-left: 20px;
-}
-
-.book:nth-child(even) .book-actions {
-    right: 100%;
-    margin-right: 20px;
-}
-
-.book-actions .action-btn {
-    min-width: 130px;
-    text-align: center;
-    padding: 8px 12px;
-    font-size: 0.9rem;
-    background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
-    border: 2px solid #D2691E;
-    border-radius: 30px;
-    color: #f0e6d2;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    transition: all 0.3s;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.book-actions .action-btn:hover {
-    background: linear-gradient(135deg, #A0522D 0%, #8B4513 100%);
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.7);
-    border-color: #f0e6d2;
-}
-
-.book-actions .download-btn {
-    background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
-    border-color: #3498db;
-}
-
-.book-actions .download-btn:hover {
-    background: linear-gradient(135deg, #34495E 0%, #2C3E50 100%);
-    border-color: #f0e6d2;
-}
-
-                                                                  /* ========== ΕΠΕΙΓΟΥΣΑ ΔΙΟΡΘΩΣΗ ΚΕΝΤΡΑΡΙΣΜΑΤΟΣ MOBILE PORTRAIT ========== */
-@media (max-width: 768px) and (orientation: portrait) {
-  /* ΑΝΑΓΚΑΣΤΙΚΟ ΚΕΝΤΡΑΡΙΣΜΑ - ΕΠΕΙΓΟΝ */
-  .books-row {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 25px !important;
-    margin: 0 auto !important;
-    padding: 0 10px !important;
-    width: 100% !important;
-    max-width: 300px !important;
-  }
-  
-  .book {
-    max-width: 160px !important;
-    width: 160px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    left: 0 !important;
-    right: 0 !important;
-  }
-  
-  /* ΚΕΝΤΡΑΡΙΣΜΑ ΡΑΦΙΟΥ */
-  .shelf-unit {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    padding: 0 10px !important;
-    width: 100% !important;
-  }
-  
-  /* ΚΕΝΤΡΑΡΙΣΜΑ ΤΙΤΛΟΥ */
-  .shelf-title {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    text-align: center !important;
-    display: block !important;
-    width: 90% !important;
-  }
-  
-  /* ΕΞΑΣΦΑΛΙΣΗ ΟΤΙ ΤΑ ΒΙΒΛΙΑ ΕΙΝΑΙ ΚΕΝΤΡΑ */
-  .book:nth-child(1),
-  .book:nth-child(2),
-  .book:nth-child(3),
-  .book:nth-child(4) {
-    margin-left: auto !important;
-    margin-right: auto !important;
-    float: none !important;
-    clear: both !important;
-  }
-  
-  /* ΚΡΙΤΙΚΟ: ΔΙΟΡΘΩΣΗ ΜΕΤΑΤΟΠΙΣΗΣ ΓΙΑ ΕΠΙΛΕΓΜΕΝΑ ΒΙΒΛΙΑ */
-  .book.selected {
-    transform: translateY(-20px) translateX(0px) !important;
-    left: 0 !important;
-    right: 0 !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-  
-  .books-row .book.selected:nth-child(even) {
-    transform: translateY(-20px) translateX(0px) !important;
-    left: 0 !important;
-    right: 0 !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-}
- /* ========== ΒΕΛΤΙΩΜΕΝΟ ΜΕΙΩΜΕΝΟ ΕΞΩΦΥΛΛΟ MOBILE ========== */
-@media (max-width: 768px) and (orientation: portrait) {
-  /* ΜΕΙΩΜΕΝΟ ΠΛΑΤΟΣ ΕΞΩΦΥΛΛΟΥ */
-  .book-cover,
-  .books-row .book:nth-child(even) .book-cover {
-    width: 100px !important;
-    background-size: contain !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-  }/* Κουμπιά δράσης στο mobile - κάθετα κάτω από το βιβλίο, εμφανίζονται μόνο όταν selected */
-.book-actions {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    transform: none !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 8px !important;
-    margin-top: 12px !important;
-    width: 100% !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transition: opacity 0.3s ease, visibility 0.3s ease !important;
-    pointer-events: none !important;
-}
-
-.book.selected .book-actions {
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-}
-
-.book-actions .action-btn {
-    min-width: 130px !important;
-    font-size: 0.85rem !important;
-    padding: 8px 12px !important;
-    white-space: normal !important;
-}
-  
-  /* ΒΕΛΤΙΩΜΕΝΗ ΘΕΣΗ ΚΑΙ ΕΦΕ */
-  .book.selected .book-cover {
-    transform: perspective(700px) rotateY(-18deg) translateX(15px) !important;
-    z-index: 1000 !important;
-    box-shadow: 15px 0 40px rgba(0, 0, 0, 0.8),
-                inset 3px 0 10px rgba(255, 255, 255, 0.15) !important;
-    filter: brightness(1.3) saturate(1.3) contrast(1.1) !important;
-  }
-  
-  .books-row .book.selected:nth-child(even) .book-cover {
-    transform: perspective(700px) rotateY(18deg) translateX(-15px) !important;
-    z-index: 1000 !important;
-    box-shadow: -15px 0 40px rgba(0, 0, 0, 0.8),
-                inset -3px 0 10px rgba(255, 255, 255, 0.15) !important;
-    filter: brightness(1.3) saturate(1.3) contrast(1.1) !important;
-  }
-  
-  /* ΑΝΑΠΡΟΣΑΡΜΟΓΗ ΒΙΒΛΙΩΝ */
-  .book {
-    max-width: 130px !important;
-    width: 130px !important;
-    margin: 0 auto !important;
-  }
-  
-  .book-spine {
-    height: 190px !important;
-    background-size: cover !important;
-    background-position: center left 20% !important;
-    box-shadow: inset 2px 0 6px rgba(0,0,0,0.4),
-                6px 6px 18px rgba(0,0,0,0.5) !important;
-    filter: brightness(1.2) saturate(1.2) contrast(1.05) !important;
-  }
-  
-  /* ΚΕΝΤΡΑΡΙΣΜΑ */
-  .books-row {
-    grid-template-columns: 1fr !important;
-    justify-items: center !important;
-    gap: 20px !important;
-  }
-  
-  .book.selected {
-    transform: translateY(-15px) !important;
-    margin-bottom: 25px !important;
-  }
-  
-  /* ΕΦΕ HOVER */
-  .book:hover:not(.selected) {
-    transform: translateY(-5px) !important;
-    transition: transform 0.3s ease !important;
-  }
-  
-  .book:not(.selected) {
-    opacity: 0.9 !important;
-    filter: brightness(0.95) !important;
-  }
-}
-
-/* ========== ΕΞΤΡΑ ΜΙΚΡΟ ΚΙΝΗΤΟ ========== */
-@media (max-width: 400px) and (orientation: portrait) {
-  .book-cover,
-  .books-row .book:nth-child(even) .book-cover {
-    width: 105px !important;
-  }
-  
-  .book {
-    max-width: 120px !important;
-    width: 120px !important;
-  }
-  
-  .book-spine {
-    height: 170px !important;
-  }
-  
-  .books-row {
-    gap: 15px !important;
-    max-width: 250px !important;
-  }
-  
-  .book.selected .book-cover {
-    transform: perspective(700px) rotateY(-15deg) translateX(10px) !important;
-  }
-  
-  .books-row .book.selected:nth-child(even) .book-cover {
-    transform: perspective(700px) rotateY(15deg) translateX(-10px) !important;
-  }
-}    
-     @media (max-width: 768px) and (orientation: portrait) {
+    /* ====== ΚΟΥΜΠΙΑ – ΠΑΝΤΑ ΜΠΡΟΣΤΑ ====== */
     .section-buttons {
-        display: flex !important;
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        gap: 8px !important;
-        padding: 0 5px !important;
-    }.book-actions .action-btn {
-    min-width: 110px !important;
-    font-size: 0.75rem !important;
-    padding: 6px 8px !important;
-}
-}</style>
-															</head>
-															<body>
-																<div class="container">
-																	<h1>
-																		<i class="fas fa-book"></i> Ενότητα: Ταλαντώσεις
-																	</h1>
-																	<p class="subtitle">Περιηγηθείτε στα ράφια και επιλέξτε ένα ΘΕΜΑ για να το εξετάσετε</p>
-																	<div class="library-viewport">
-																		<button class="nav-arrow left" id="prevShelf" aria-label="Προηγούμενο ράφι">
-																			<i class="fas fa-chevron-left"></i>
-																		</button>
-																		<div class="shelves-track" id="shelvesTrack">
-																			<!-- ΡΑΦΙ 1 -->
-																			<div class="shelf-unit">
-																				<div class="shelf-title">Απλές αρμονικές ταλαντώσεις</div>
-																				<div class="shelf-board"></div>
-																				<div class="books-row">
-																					<div class="book" data-cover="book1" data-pdf="book1.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>																					<div class="book" data-cover="book2" data-pdf="book2.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>																					<div class="book" data-cover="book3" data-pdf="book3.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>																					<div class="book" data-cover="book4" data-pdf="book4.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>	</div>																			<div class="shelf-board-bottom"></div>
-																				<div class="shelf-board-floor"></div>
-																			</div>
-																			<!-- ΡΑΦΙ 2 -->
-																			<div class="shelf-unit">
-																				<div class="shelf-title">Φθίνουσες ταλαντώσεις</div>
-																				<div class="shelf-board"></div>
-																				<div class="books-row">
-																					<div class="book" data-cover="book5" data-pdf="book5.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>																					<div class="book" data-cover="book6" data-pdf="book6.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>																					<div class="book" data-cover="book7" data-pdf="book7.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>																					<div class="book" data-cover="book8" data-pdf="book8.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>																				</div>
-																				<div class="shelf-board-bottom"></div>
-																				<div class="shelf-board-floor"></div>
-																			</div>
-																			<!-- ΡΑΦΙ 3 -->
-																			<div class="shelf-unit">
-																				<div class="shelf-title">Εξαναγκασμένες ταλαντώσεις</div>
-																				<div class="shelf-board"></div>
-																				<div class="books-row">
-																					<div class="book" data-cover="book9" data-pdf="book9.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>																					<div class="book" data-cover="book10" data-pdf="book10.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>																					<div class="book" data-cover="book11" data-pdf="book11.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>																					<div class="book" data-cover="book12" data-pdf="book12.pdf">
-    <div class="book-spine"></div>
-    <div class="book-cover"></div>
-    <div class="book-actions">
-        <a href="#" class="action-btn read-btn">📖 Ανάγνωση</a>
-        <a href="#" class="action-btn download-btn">⬇ Λήψη PDF</a>
-    </div>
-</div>																				</div>
-																				<div class="shelf-board-bottom"></div>
-																				<div class="shelf-board-floor"></div>
-																			</div>
-																		</div>
-																		<button class="nav-arrow right" id="nextShelf" aria-label="Επόμενο ράφι">
-																			<i class="fas fa-chevron-right"></i>
-																		</button>
-																	</div>
-																	<div class="shelf-indicators">
-																		<span class="indicator active" data-index="0"></span>
-																		<span class="indicator" data-index="1"></span>
-																		<span class="indicator" data-index="2"></span>
-																	</div>
-																	
-																</div>
-																<script> 
-// ΑΡΧΙΚΟΠΟΙΗΣΗ 
-const track = document.getElementById('shelvesTrack'); 
-const shelves = document.querySelectorAll('.shelf-unit'); 
-const indicators = document.querySelectorAll('.indicator'); 
-const books = document.querySelectorAll('.book'); 
-
-
-const prevBtn = document.getElementById('prevShelf'); 
-const nextBtn = document.getElementById('nextShelf'); 
-
-// ΒΑΣΙΚΑ ΔΕΔΟΜΕΝΑ ΒΙΒΛΙΩΝ 
-const bookData = { 
-'book1': { title: 'Απλές Αρμονικές Ταλαντώσεις - Θέμα Α', spine: 'https://i.postimg.cc/1zgMN219/aant-A.png', cover: 'https://i.postimg.cc/VvprbG98/aa.png', pdf: 'https://drive.google.com/file/d/1UmB8hDrhg1JXUhnTFOrIojU5yeBPkhz2/view?usp=sharing' }, 
-'book2': { title: 'Απλές Αρμονικές Ταλαντώσεις - Θέμα Β', spine: 'https://i.postimg.cc/HnTQ3PRb/aant-B1.png', cover: 'https://i.postimg.cc/VLtF1pPj/bb.png', pdf: 'https://drive.google.com/file/d/1Hri9-HNTWaqBCSGu13Ug5VyAXYG1zE2s/view?usp=sharing' }, 
-'book3': { title: 'Απλές Αρμονικές Ταλαντώσεις - Θέμα Γ', spine: 'https://i.postimg.cc/RZ2K202Z/aamt-G1.png', cover: 'https://i.postimg.cc/fW66B7Rx/Copilot-20260121-001618.png', pdf: 'https://drive.google.com/file/d/1oT7Im0G_nlGR8nQmdWZWmSYrhqwtD2qh/view?usp=sharing' }, 
-'book4': { title: 'Απλές Αρμονικές Ταλαντώσεις - Θέμα Δ', spine: 'https://i.postimg.cc/Qxt7t53W/aamt-D1.png', cover: 'https://i.postimg.cc/1tDYd2t4/aat4.png', pdf: 'https://drive.google.com/file/d/1NBA1FpJl2CtrdW1Jaz8ZVa9ywhT5QQDF/view?usp=sharing' }, 
-'book5': { title: 'Φθίνουσες Ταλαντώσεις - Θέμα Α', spine: 'https://i.postimg.cc/CKNvvC2n/d.png', cover: 'https://i.postimg.cc/KY8YQjXM/phthin-tal-thema-A.png', pdf: 'https://drive.google.com/file/d/18Tvu-CCKJK2L3n3uKkvFhr7JSSsNZbYc/view?usp=sharing' }, 
-'book6': { title: 'Φθίνουσες Ταλαντώσεις - Θέμα Β', spine: 'https://i.postimg.cc/0NDC3YHP/b.png', cover: 'https://i.postimg.cc/0jN67jfh/BCO-a52ce11f-79de-4731-9929-c1d0ade0336e.png', pdf: 'https://drive.google.com/file/d/1hdE048ogHMHMD9Ke8lG-HhygdiCvGzMC/view?usp=sharing' }, 
-'book7': { title: 'Φθίνουσες Ταλαντώσεις - Θέμα Γ', spine: 'https://i.postimg.cc/0jbKgx2F/g.png', cover: 'https://i.postimg.cc/zDk6BB62/Copilot-20260120-013600.png', pdf: 'https://drive.google.com/file/d/1jH5ah71Vlei0UR3sIW4aZ603bHtX_BTu/view?usp=sharing' }, 
-'book8': { title: 'Φθίνουσες Ταλαντώσεις - Θέμα Δ', spine: 'https://i.postimg.cc/sDW15TBf/a.png', cover: 'https://i.postimg.cc/j5fWXB0c/133c01e3-cc7e-4a8c-a34e-649fff1dce0a.png', pdf: 'https://drive.google.com/file/d/1kKhu_WWSSpDEGNnK50WSGDLlzIWdCUej/view?usp=sharing' }, 
-'book9': { title: 'Εξαναγκασμένες ταλαντώσεις - Θέμα Α', spine: 'https://i.postimg.cc/DyHrRJPm/A-ex.png', cover: 'https://i.postimg.cc/V60rq424/a0ac9f98-501f-421e-b9b7-05a29daf2d13.png', pdf: 'https://drive.google.com/file/d/1yo0QWdyUL9CFUuweSNenCc7IYEX8y28M/view?usp=sharing' }, 
-'book10': { title: 'Εξαναγκασμένες ταλαντώσεις - Θέμα Β', spine: 'https://i.postimg.cc/xTwm6r9y/B-ex.png', cover: 'https://i.postimg.cc/NM8YvHXL/28b774b8-1bb7-4299-9faf-afd98ead1908.png', pdf: 'https://drive.google.com/file/d/14c5DPUeVTXUcc3GFb8QlJdGs0MO5fTYf/view?usp=sharing' }, 
-'book11': { title: 'Εξαναγκασμένες ταλαντώσεις - Θέμα Γ', spine: 'https://i.postimg.cc/pTch840y/G-ex.png', cover: 'https://i.postimg.cc/hPvFpw2z/94b90fd3-1996-4957-a555-442c33239a3d.png', pdf: 'https://drive.google.com/file/d/1st3V6I_bjzI1d9fxEXxc2aDY9cS_Y9dB/view?usp=sharing' }, 
-'book12': { title: 'Εξαναγκασμένες ταλαντώσεις - Θέμα Δ', spine: 'https://i.postimg.cc/7LxfRwdg/D-ej.png', cover: 'https://i.postimg.cc/jqk3djht/d285d5ee-7267-4fd8-b525-14c6bc327f45.png', pdf: 'https://drive.google.com/file/d/1riTG64L9MNYYMawDD-T4wmLVOOCNiVNw/view?usp=sharing' } 
-}; 
-
-// ΑΡΧΙΚΟΠΟΙΗΣΗ ΕΙΚΟΝΩΝ 
-books.forEach(book => { 
-const bookId = book.getAttribute('data-cover'); 
-const data = bookData[bookId]; 
-if (data) { 
-const spine = book.querySelector('.book-spine'); 
-const cover = book.querySelector('.book-cover'); 
-// ΡΑΧΗ 
-spine.style.background = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url("${data.spine}")`; 
-spine.style.backgroundSize = 'cover'; 
-spine.style.backgroundRepeat = 'no-repeat'; 
-// ΕΞΩΦΥΛΛΟ 
-cover.style.background = `url("${data.cover}")`; 
-cover.style.backgroundSize = 'cover'; 
-cover.style.backgroundPosition = 'center'; 
-cover.style.backgroundRepeat = 'no-repeat'; 
-// Για δεξιά βιβλία (άρτια) 
-const isRightBook = Array.from(book.parentElement.children).indexOf(book) % 2 === 1; 
-if (isRightBook) { 
-spine.style.backgroundPosition = 'center right 25%'; 
-} else { 
-spine.style.backgroundPosition = 'center left 25%'; 
-} 
-} 
-}); 
-
-const totalShelves = shelves.length; 
-let currentShelf = 0; 
-let selectedBook = null; 
-let autoSlideInterval; 
-
-// ΣΥΝΑΡΤΗΣΗ ΜΕΤΑΚΙΝΗΣΗΣ ΣΕ ΡΑΦΙ 
-function goToShelf(shelfIndex) { 
-closeAllBookCovers(); 
-if (shelfIndex >= totalShelves) currentShelf = 0; 
-else if (shelfIndex < 0) currentShelf = totalShelves - 1; 
-else currentShelf = shelfIndex; 
-const offset = -currentShelf * 100; 
-track.style.transform = `translateX(${offset}%)`; 
-indicators.forEach((ind, idx) => { 
-ind.classList.toggle('active', idx === currentShelf); 
-}); 
-
-selectedBook = null; 
-} 
-
-// ΣΥΝΑΡΤΗΣΗ ΚΛΕΙΣΙΜΟΥ ΟΛΩΝ ΤΩΝ ΕΞΩΦΥΛΛΩΝ 
-function closeAllBookCovers() { 
-books.forEach(book => { 
-book.classList.remove('selected'); 
-book.style.opacity = '1'; 
-book.style.transform = ''; 
-book.style.zIndex = '1'; 
-}); 
-} 
-
-// ΓΕΓΟΝΟΤΑ ΒΕΛΑΚΙΩΝ 
-prevBtn.addEventListener('click', () => { 
-resetAutoSlide(); 
-goToShelf(currentShelf - 1); 
-}); 
-
-nextBtn.addEventListener('click', () => { 
-resetAutoSlide(); 
-goToShelf(currentShelf + 1); 
-}); 
-
-// ΓΕΓΟΝΟΤΑ ΚΟΥΚΚΙΔΩΝ 
-indicators.forEach(ind => { 
-ind.addEventListener('click', function() { 
-resetAutoSlide(); 
-goToShelf(parseInt(this.getAttribute('data-index'))); 
-}); 
-}); 
-
-// ΓΕΓΟΝΟΤΑ ΕΠΙΛΟΓΗΣ ΒΙΒΛΙΟΥ 
-books.forEach(book => { 
-book.setAttribute('tabindex', '0'); 
-book.addEventListener('click', function(e) {
-    e.stopPropagation();
-    const bookId = this.getAttribute('data-cover');
-    const data = bookData[bookId];
-    if (!data) return;
-
-    if (this.classList.contains('selected')) {
-        closeAllBookCovers();
-        selectedBook = null;
-        startAutoSlide();
-        return;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 30px;
+      padding: 12px 14px;
+      background: linear-gradient(160deg, #2c1810, #1a0e08);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+      border: 1px solid rgba(212,165,116,0.15);
+      /* Σημαντικό: μπροστά από τη βιβλιοθήκη */
+      position: relative;
+      z-index: 100;
     }
 
-    closeAllBookCovers();
-    this.classList.add('selected');
-
-    // Μετατόπιση του βιβλίου (ίδια με πριν)
-    const isRightBook = Array.from(this.parentElement.children).indexOf(this) % 2 === 1;
-    if (isRightBook) {
-        this.style.transform = 'translateY(-20px) translateX(-15px)';
-    } else {
-        this.style.transform = 'translateY(-20px) translateX(15px)';
+    .section-btn {
+      background: linear-gradient(145deg, #5a3522, #3e2416);
+      color: #f5e6cf;
+      border: 1px solid rgba(212,165,116,0.25);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: auto;
+      transition: all 0.25s ease;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.15);
     }
-    this.style.zIndex = '1000';
+    .section-btn:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(145deg, #6d452c, #4b2b1a);
+    }
+    .section-btn.active {
+      background: linear-gradient(145deg, #a06a47, #6d452c);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(212,165,116,0.5);
+    }
+    .section-btn span {
+      font-size: 15px;
+    }
 
-    // Θόλωμα άλλων βιβλίων
-    books.forEach(b => {
-        if (b !== this) b.style.opacity = '0.7';
-    });
+    /* ====== ΒΙΒΛΙΟΘΗΚΗ – ΑΙΩΡΗΣΗ ΠΙΣΩ ΑΠΟ ΤΑ ΚΟΥΜΠΙΑ ====== */
+    .library {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px;
+      background: linear-gradient(145deg, #4b2b1a, #24140b);
+      box-shadow: inset 0 0 35px rgba(0,0,0,.7), 0 30px 60px rgba(0,0,0,.8);
+      /* Σχετική θέση και χαμηλό z-index – πίσω από τα κουμπιά */
+      position: relative;
+      z-index: 1;
+      /* Ενεργοποίηση αιώρησης */
+      animation: floatUpDown 5s infinite ease-in-out;
+      will-change: transform;
+      /* Μικρό περίγραμμα για να φαίνεται η κίνηση */
+      border: 2px solid rgba(212,165,116,0.1);
+    }
 
-    // Ενημέρωση των κουμπιών μέσα στο βιβλίο
-    const readBtn = this.querySelector('.read-btn');
-    const downloadBtn = this.querySelector('.download-btn');
+    @keyframes floatUpDown {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-25px); } /* πιο έντονη άνοδος */
+      100% { transform: translateY(0); }
+    }
 
-    if (data.pdf) {
-        const pdfLink = data.pdf;
-        readBtn.href = pdfLink;
-        readBtn.target = "_blank";
+    /* ΡΑΦΙ 2x2 */
+    .shelf-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 26px;
+      padding: 26px;
+      background: linear-gradient(#2b160d, #1a0e08);
+      box-shadow: inset 0 0 25px rgba(0,0,0,.7), 0 15px 35px rgba(0,0,0,.8);
+    }
 
-        // Επεξεργασία για download από Google Drive
-        if (pdfLink.includes("drive.google.com") || pdfLink.includes("docs.google.com")) {
-            let fileId = '';
-            const patterns = [
-                /\/file\/d\/([a-zA-Z0-9_-]+)/,
-                /\/document\/d\/([a-zA-Z0-9_-]+)/,
-                /\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/,
-                /\/presentation\/d\/([a-zA-Z0-9_-]+)/,
-                /id=([a-zA-Z0-9_-]+)/,
-                /\/d\/([a-zA-Z0-9_-]+)/
-            ];
-            for (const pattern of patterns) {
-                const match = pdfLink.match(pattern);
-                if (match && match[1]) {
-                    fileId = match[1];
-                    break;
-                }
+    /* ΘΗΚΗ */
+    .slot {
+      aspect-ratio: 1/1;
+      background: linear-gradient(#3a2115, #22120a);
+      box-shadow: inset 0 -18px 22px rgba(0,0,0,.65);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* ΒΙΒΛΙΟ */
+    .book {
+      width: 80%;
+      height: 80%;
+      background: #f2f2f2;
+      box-shadow: 0 12px 22px rgba(0,0,0,.6);
+      transition: .4s;
+      position: relative;
+    }
+    .slot:hover .book {
+      transform: translateZ(60px) scale(1.06);
+    }
+    .book img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* OVERLAY */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.9), rgba(0,0,0,.2));
+      opacity: 0;
+      transition: .3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 12px;
+    }
+    .slot:hover .overlay {
+      opacity: 1;
+    }
+
+    .badge {
+      background: #8b5a3c;
+      color: #fff;
+      padding: 4px 6px;
+      font-size: 12px;
+      border-radius: 3px;
+      width: fit-content;
+      font-weight: normal;
+    }
+
+    .overlay a {
+      text-decoration: none;
+      color: #fff;
+      background: #7a4a2e;
+      padding: 8px;
+      margin-top: 8px;
+      text-align: center;
+      border-radius: 4px;
+      font-size: 15px;
+      display: block;
+    }
+    .overlay a:hover {
+      background: #b06d45;
+    }
+
+    .tooltip {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translate(-50%, -100%);
+      background: #111;
+      color: #fff;
+      padding: 6px 8px;
+      font-size: 13px;
+      border-radius: 4px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .3s;
+      white-space: nowrap;
+    }
+    .slot:hover .tooltip {
+      opacity: 1;
+    }
+
+    @media (max-width: 700px) {
+      .shelf-block {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script type="application/ld+json" id="schema-data"></script>
+</head>
+<body>
+  <h1 class="main-title">
+    ΠΑΝΕΛΛΑΔΙΚΕΣ Γ΄ ΛΥΚΕΙΟΥ
+    <span>📖 ΘΕΜΑΤΙΚΗ ΨΗΦΙΑΚΗ ΒΙΒΛΙΟΘΗΚΗ</span>
+  </h1>
+  <div class="intro-description">
+    Δωρεάν εκπαιδευτικό υλικό Πανελλαδικών Φυσικής Γ΄ Λυκείου (2002–2025), 
+    οργανωμένο ανά κεφάλαιο και κατηγορία θεμάτων Α (Θεωρία), 
+    Β (Εφαρμογές), Γ (Αυξημένης δυσκολίας) και Δ (Απαιτητικά προβλήματα). 
+    Για κάθε ενότητα διατίθενται 4 βιβλία με θεωρία και λυμένες ασκήσεις 
+    σε μορφή Word και PDF για προβολή ή λήψη.
+  </div>
+
+  <!-- ΚΟΥΜΠΙΑ – ΠΑΝΤΑ ΜΠΡΟΣΤΑ (z-index:100) -->
+  <nav class="section-buttons" aria-label="Θεματικές ενότητες">
+    <button class="section-btn" onclick="loadShelf('krousi', this)"><span>💥</span> Κρούση</button>
+    <button class="section-btn" onclick="loadShelf('osc', this)"><span>📈</span> Ταλαντώσεις</button>
+    <button class="section-btn" onclick="loadShelf('waves', this)"><span>🌊</span> Κύματα</button>
+    <button class="section-btn" onclick="loadShelf('solid', this)"><span>⚙️</span> Μηχανική Στερεού</button>
+    <button class="section-btn" onclick="loadShelf('em', this)"><span>🧲</span> Ηλεκτρομαγνητισμός</button>
+    <button class="section-btn" onclick="loadShelf('quantum', this)"><span>⚛️</span> Κβαντική Φυσική</button>
+  </nav>
+
+  <!-- ΒΙΒΛΙΟΘΗΚΗ – ΑΙΩΡΕΙΤΑΙ (z-index:1) -->
+  <main class="library">
+    <div id="shelf"></div>
+  </main>
+
+  <script>
+    const data = {
+      krousi: [
+        {t:"Κρούση", d:"Πανελλαδικές Θέμα Α – Κρούση", img:"https://i.makeagif.com/media/1-18-2021/pM1-o8.gif", r:"https://docs.google.com/document/d/1MQwf8sdtIyDtIoVUNzPG0vEXeqtYs-go/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1hH9P5QGwWhD_AVs5drVWgmE3kZsEmh1I/view?usp=sharing"},
+        {t:"Κρούση", d:"Πανελλαδικές Θέμα B – Κρούση", img:"https://forum-files-playcanvas-com.s3.dualstack.eu-west-1.amazonaws.com/original/2X/b/b61786ce4c8e3d58d5b072ebebd3cd968a720f1f.gif", r:"https://docs.google.com/document/d/1tqTr2G_sSf80-EHFvQyV0CJ6A6-bt43I/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1G7xAQeXlUKCwW7MrhyapD2-ZrgYXwvIT/view?usp=sharing"},
+        {t:"Κρούση", d:"Πανελλαδικές Θέμα Γ – Κρούση", img:"https://homework.study.com/cimages/multimages/16/newtons_cradle_animation_new8632884813640560703.gif", r:"https://docs.google.com/document/d/1b3Aq0YLdcub8Q7hn9qOKTyFHA6wOfLUg/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1Kb1oA7FMMJE7KRrWjKBfWv41YCs3GFB2/view?usp=sharing"},
+        {t:"Κρούση", d:"Πανελλαδικές Θέμα Δ – Κρούση", img:"https://obi.virtualmethodstudio.com/manual/images/tutorial3/contacts.gif", r:"https://docs.google.com/document/d/1X1hfDvqPkxRMookzipjOg5oHaGekUz62/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1EqGoYBk-Ymc0MtDpRMXLchGMQomTd0AN/view?usp=sharing"}
+      ],
+      osc: [
+        {t:"Απλές αρμονικές / φθίνουσες / εξαναγκασμένες", d:"Πανελλαδικές Θέμα Α – Ταλαντώσεις", img:"https://upload.wikimedia.org/wikipedia/commons/2/21/Muelle_bola.gif", r:"https://docs.google.com/document/d/17qBxd0iHyi5w4HYXycA-Gb7PgQCFzDuj/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/18LjhE7YXe0PdG4Me0Xhv3bKkAf_Odb47/view?usp=sharing"},
+        {t:"Απλές αρμονικές / φθίνουσες / εξαναγκασμένες", d:"Πανελλαδικές Θέμα Β – Ταλαντώσεις", img:"https://upload.wikimedia.org/wikipedia/commons/a/a6/Damped_oscillator.gif", r:"https://docs.google.com/document/d/1tiYVSKEF0YPY2g7auR5K3mWX8Jg5NueE/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/171qSmEGfjipgLKAf9VL_DrlFKLnQOiz_/view?usp=sharing"},
+        {t:"Απλές αρμονικές / φθίνουσες / εξαναγκασμένες", d:"Πανελλαδικές Θέμα Γ – Ταλαντώσεις", img:"https://www.exploratorium.edu/sites/default/files/Resonator.gif", r:"https://docs.google.com/document/d/1jGbLzE0zQQGoZKuQgCD3iCgZ4q6vhbfd/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/18JN4IeL845C33Rq8-x4oCGGeiyDEZK19/view?usp=sharing"},
+        {t:"Απλές αρμονικές / φθίνουσες / εξαναγκασμένες", d:"Πανελλαδικές Θέμα Δ – Ταλαντώσεις", img:"https://yogesh233.wordpress.com/wp-content/uploads/2018/10/shm.gif", r:"https://docs.google.com/document/d/1OTP-NHnyGgBzIkCKkDEi-ok-jiwonLeC/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1JwrAkA7doazCFOMAKHF3kBXdqvjofoVx/view?usp=sharing"}
+      ],
+      waves: [
+        {t:"Αρμονικά / Στάσιμα / Συμβολή", d:"Πανελλαδικές Θέμα Α – Κύματα", img:"https://upload.wikimedia.org/wikipedia/commons/9/91/1D-Wave.gif", r:"https://docs.google.com/document/d/1y7hVoTKshARN4DOHTClRF3nVX3MHFpPm/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1Y4ubfluFbHA0wRTAqHsZX410e6YnqIjr/view?usp=sharing"},
+        {t:"Αρμονικά / Στάσιμα / Συμβολή", d:"Πανελλαδικές Θέμα Β – Κύματα", img:"https://upload.wikimedia.org/wikipedia/commons/9/9f/Huygens_Fresnel_Principle2.gif", r:"https://docs.google.com/document/d/1yuRZRrJMvzdxYKWl6Ntk3hmykBy8kam-/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/10i6KMQhesetrLJ75J6ByGMeWYcSKvnWT/view?usp=sharing"},
+        {t:"Αρμονικά / Στάσιμα / Συμβολή", d:"Πανελλαδικές Θέμα Γ – Κύματα", img:"https://upload.wikimedia.org/wikipedia/commons/5/5c/Standing_waves_on_a_string.gif", r:"https://docs.google.com/document/d/1a_k6PlkqEXsfwzbnkOFXO69cSv6jL5zI/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1aZLlIXRd_UjINQTvDVlC3r4v-5zMAauG/view?usp=sharing"},
+        {t:"Αρμονικά / Στάσιμα / Συμβολή", d:"Πανελλαδικές Θέμα Δ – Κύματα", img:"https://www.acs.psu.edu/drussell/demos/waves/Lwave-Red-2.gif", r:"https://docs.google.com/document/d/1eoMXRSCO1YfRVixE8V98sHfAIaAdDk84/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/11KB1rhT7nQNAOMUWJ2vlEr5blyKcbclZ/view?usp=sharing"}
+      ],
+      solid: [
+        {t:"Ροπές / Ισορροπία / Στροφορμή", d:"Πανελλαδικές Θέμα Α – Στερεό", img:"https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDU0Mmh2azgwendlaDlsYjRhcmxvanA1aHNvbHo2ZjZqbmtqaDhqMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oxHQDYNRtgTKiYEBG/giphy.gif", r:"https://docs.google.com/document/d/1iMgO9ZHVMxJi9ckAx-qWR5e_k4bbZ9e7/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1T2OpxPtcN2p6IaStBi4bdGpUsMyNGaOd/view?usp=sharing"},
+        {t:"Ροπές / Ισορροπία / Στροφορμή", d:"Πανελλαδικές Θέμα Β – Στερεό", img:"https://www.flippingphysics.com/uploads/2/1/1/0/21103672/0299-cycloid_3.gif", r:"https://docs.google.com/document/d/1CB1pU4ccGOXXYWMfqB3j80kF1FIoYiQ8/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/15q-x3hmKyrro-0Fxm4mDjn7SKheRvG12/view?usp=sharing"},
+        {t:"Ροπές / Ισορροπία / Στροφορμή", d:"Πανελλαδικές Θέμα Γ – Στερεό", img:"https://www.flippingphysics.com/uploads/2/1/1/0/21103672/0447-animated-gif-record-player-particle_orig.gif", r:"https://docs.google.com/document/d/19jX102Btj8rwrJf8yjJ5xOOfnjLB0T5-/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1Hq2wOCxIXQHyTtPXZTz-YhTE95_L1N6_/view?usp=sharing"},
+        {t:"Ροπές / Ισορροπία / Στροφορμή", d:"Πανελλαδικές Θέμα Δ – Στερεό", img:"https://s3-eu-west-1.amazonaws.com/fetchcfd/resized/file-1574432686370.gif", r:"https://docs.google.com/document/d/1_9lfssgxmjXMwnZ9-dgocVcuuI8H9vR1/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1niqKj5aSkyjr8JqQs6_W56euD_Y--ynS/view?usp=sharing"}
+      ],
+      em: [
+        {t:"Ηλεκτρομαγνητικά φαινόμενα", d:"Πανελλαδικές Θέμα Α – Ηλεκτρομαγνητισμός", img:"https://upload.wikimedia.org/wikipedia/commons/5/55/Induction.gif", r:"https://docs.google.com/document/d/1Jp0JWtLmcy3NB4USnWmeQtFS-EJT7A_5/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1adIl15RYCdg5HgiSSPZLshK8IJ3d_wAh/view?usp=sharing"},
+        {t:"Ηλεκτρομαγνητικά φαινόμενα", d:"Πανελλαδικές Θέμα Β – Ηλεκτρομαγνητισμός", img:"https://blogger.googleusercontent.com/img/a/AVvXsEjgkJXtjJSHzVECyAFalc5FmfbJE2kpo_ZGYaJOl1gXv8aPSrKZebKudrXqB8G87mKGS9t9TpxrwUQbukkCeUXGtygo-_cCXisOVJtIco-2pXl8dSfWN-CarSBdxLwOYfL7BFC1yVRqrqvLMlM8vfCcq6T5Brv_9k4FU-lWEv_B2GbVnPh4FGaEzNsl=s0", r:"https://docs.google.com/document/d/1EXOOCEehTp6tN0KiVcR1-kz164u-ivxT/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/121MUnXfx_M6BXMDP8AUwKT3RVb6Hbz18/view?usp=sharing"},
+        {t:"Ηλεκτρομαγνητικά φαινόμενα", d:"Πανελλαδικές Θέμα Γ – Ηλεκτρομαγνητισμός", img:"https://media.licdn.com/dms/image/v2/D5622AQHwGW_Z91o1Iw/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1716683417481?e=2147483647&v=beta&t=UIQCaFgJi9QPGQaYtRV89nKNP618dE4s8gHFF7LZ1gU", r:"https://docs.google.com/document/d/1MGsJ32-D3b1jZ3lXx6S_0NBYJrlAU_um/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/11gehvhZVplpzPqwndzrZfzlhGD2YlM6K/view?usp=sharing"},
+        {t:"Ηλεκτρομαγνητικά φαινόμενα", d:"Πανελλαδικές Θέμα Δ – Ηλεκτρομαγνητισμός", img:"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi7NdKM9oUudEY0HIMbVWIPYiscbiRIEy7nHzSkpHyLBm3taiy_UYSzoh3Wv1P-ZCgKQQKLaLsNIrTTD7jo2ciRev0HC1_B8ajDJcmUfJizEs99XZI96ixkGeX_ycPlQNmkvs2vF4BDaSsb/s1600/electro1.gif", r:"https://docs.google.com/document/d/16xLDWdbUzwrWmpw5MepmQK6BrZbUlepf/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/12xqcbBYtE8AVwko5PSdGjyj_8XPHzTgR/view?usp=sharing"}
+      ],
+      quantum: [
+        {t:"Φωτόνιο, Φωτοηλεκτρικό, Compton, Αβεβαιότητα", d:"Πανελλαδικές Θέμα Α – Κβαντική Φυσική", img:"https://i.pinimg.com/originals/cb/0a/64/cb0a64e82c300ec4b800bd10cf6c5970.gif", r:"https://docs.google.com/document/d/1LZKgPKKtshM8hrR_7GoQ0uqkp7XneRab/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1vWktIcTm3nyVffbZJAt2uI40z3P_Bl7D/view?usp=sharing"},
+        {t:"Φωτόνιο, Φωτοηλεκτρικό, Compton, Αβεβαιότητα", d:"Πανελλαδικές Θέμα Β – Κβαντική Φυσική", img:"https://prod-images-static.radiopaedia.org/images/53246803/5bf0aad1ea688bf7672177a9a76f9e_big_gallery.jpeg", r:"https://docs.google.com/document/d/16z4BkmxPNG2n_ViKMh8cZeFuW4CnGP6g/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1ewWKYuUoT1PSCrQZdBn4B9hdbvsr5WcW/view?usp=sharing"},
+        {t:"Φωτόνιο, Φωτοηλεκτρικό, Compton, Αβεβαιότητα", d:"Πανελλαδικές Θέμα Γ – Κβαντική Φυσική", img:"https://gsalvatovallverdu.gitlab.io/img/aboveth.gif", r:"https://docs.google.com/document/d/1WZhOh8woQnJ3mx-sgsYl9RZiu5cnNwOW/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/1rg_6_eyhiBhT14KGogB2XWIdytE7AUzo/view?usp=sharing"},
+        {t:"Φωτόνιο, Φωτοηλεκτρικό, Compton, Αβεβαιότητα", d:"Πανελλαδικές Θέμα Δ – Κβαντική Φυσική", img:"https://www.shutterstock.com/image-vector/heisenberg-uncertainty-principle-on-black-260nw-2495877171.jpg", r:"https://docs.google.com/document/d/15CYeeZvjOmC7W998Z-Tn0Rjb7soQd9md/edit?usp=sharing&ouid=101935487679823763114&rtpof=true&sd=true", p:"https://drive.google.com/file/d/19heLRT3ZHGIEM0lQved-k3318mYvxGOp/view?usp=sharing"}
+      ]
+    };
+
+    function loadShelf(key, btn = null) {
+      const s = document.getElementById("shelf");
+      if (!data[key]) return;
+
+      s.innerHTML = '<div class="shelf-block">' +
+        data[key].map(b => `
+          <article class="slot">
+            <div class="tooltip">${b.d.replace('Πανελλαδικές ', '')}</div>
+            <div class="book">
+              <img loading="lazy" src="${b.img}" alt="${b.t} - ${b.d}: οπτική αναπαράσταση φυσικού φαινομένου">
+              <div class="overlay">
+                <h2 class="badge">${b.t}</h2>
+                <div>
+                  <a href="${b.r}" target="_blank">📖 Λήψη Word</a>
+                  <a href="${b.p}" target="_blank">⬇ Άνοιγμα PDF</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        `).join('') + '</div>';
+
+      document.querySelectorAll('.section-btn').forEach(b => b.classList.remove('active'));
+      if (btn) {
+        btn.classList.add('active');
+      } else {
+        const activeBtn = Array.from(document.querySelectorAll('.section-btn')).find(
+          b => b.getAttribute('onclick')?.includes(`'${key}'`) || b.getAttribute('onclick')?.includes(`"${key}"`)
+        );
+        if (activeBtn) activeBtn.classList.add('active');
+      }
+    }
+
+    function generateSchema() {
+      const items = [];
+      let position = 1;
+      for (const [key, section] of Object.entries(data)) {
+        section.forEach(item => {
+          items.push({
+            "@type": "ListItem",
+            "position": position++,
+            "item": {
+              "@type": "CreativeWork",
+              "name": `${item.t} – ${item.d}`,
+              "url": item.r,
+              "encodingFormat": item.r.includes('document') ? 'application/vnd.google-apps.document' : 'application/pdf',
+              "abstract": `Θέμα ${item.d} για ${item.t}`
             }
-            if (fileId) {
-                if (pdfLink.includes("/document/")) {
-                    downloadBtn.href = `https://docs.google.com/document/d/${fileId}/export?format=pdf`;
-                } else {
-                    downloadBtn.href = `https://drive.google.com/uc?export=download&id=${fileId}`;
-                }
-                downloadBtn.setAttribute('download', `${data.title.replace(/[^a-z0-9]/gi, '_')}.pdf`);
-            } else {
-                downloadBtn.href = pdfLink;
-            }
-        } else {
-            downloadBtn.href = pdfLink;
-            downloadBtn.setAttribute('download', `${data.title.replace(/[^a-z0-9]/gi, '_')}.pdf`);
-        }
-        downloadBtn.target = "_blank";
-    } else {
-        readBtn.href = "#";
-        downloadBtn.href = "#";
-        downloadBtn.removeAttribute('download');
+          });
+        });
+      }
+      const schema = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Θέματα Πανελλαδικών Φυσικής Γ΄ Λυκείου",
+        "description": "Συλλογή θεμάτων Πανελλαδικών εξετάσεων στη Φυσική, οργανωμένη ανά ενότητα και θέμα (Α, Β, Γ, Δ). Περιλαμβάνει αρχεία Word και PDF.",
+        "numberOfItems": items.length,
+        "itemListElement": items
+      };
+      document.getElementById('schema-data').textContent = JSON.stringify(schema);
     }
 
-    selectedBook = this;
-    stopAutoSlide();
-});book.addEventListener('keydown', (e) => { 
-if (e.key === 'Enter' || e.key === ' ') { 
-e.preventDefault(); 
-book.click(); 
-} 
-}); 
-}); 
+    // Αρχική φόρτωση
+    loadShelf('osc');
+    generateSchema();
+  </script>
+<!-- Ο υπόλοιπος κώδικάς σου -->
+<script>
+// Απενεργοποίηση δεξιού κλικ
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    // Μπορείς να βάλεις ένα προαιρετικό μήνυμα, π.χ. alert('Η προβολή κώδικα δεν επιτρέπεται.');
+});
 
-// ΚΛΕΙΣΙΜΟ ΒΙΒΛΙΟΥ ΜΕ ΚΛΙΚ ΕΞΩ 
-document.addEventListener('click', function(e) { 
-if (!e.target.closest('.book') && selectedBook) { 
-closeAllBookCovers(); 
-
-selectedBook = null; 
-startAutoSlide(); 
-} 
-}); 
-
-// ΚΛΕΙΣΙΜΟ ΒΙΒΛΙΟΥ ΜΕ ESC ΚΑΙ ΠΛΟΗΓΗΣΗ ΜΕ ΒΕΛΑΚΙΑ 
-document.addEventListener('keydown', function(e) { 
-if (e.key === 'Escape' && selectedBook) { 
-closeAllBookCovers(); 
-
-selectedBook = null; 
-startAutoSlide(); 
-} 
-if (e.key === 'ArrowLeft') { 
-resetAutoSlide(); 
-goToShelf(currentShelf - 1); 
-} 
-if (e.key === 'ArrowRight') { 
-resetAutoSlide(); 
-goToShelf(currentShelf + 1); 
-} 
-}); 
-
-// TOUCH EVENTS ΓΙΑ MOBILE 
-let touchStartX = 0; 
-const viewport = document.querySelector('.library-viewport'); 
-viewport.addEventListener('touchstart', (e) => { 
-touchStartX = e.touches[0].clientX; 
-stopAutoSlide(); 
-}, { passive: true }); 
-
-viewport.addEventListener('touchend', (e) => { 
-const touchEndX = e.changedTouches[0].clientX; 
-const diff = touchStartX - touchEndX; 
-if (Math.abs(diff) > 50) { 
-closeAllBookCovers(); 
-
-selectedBook = null; 
-if (diff > 0) { 
-goToShelf(currentShelf + 1); 
-} else { 
-goToShelf(currentShelf - 1); 
-} 
-resetAutoSlide(); 
-} 
-setTimeout(startAutoSlide, 3000); 
-}, { passive: true }); 
-
-// ΑΥΤΟΜΑΤΗ ΠΛΟΗΓΗΣΗ 
-function startAutoSlide() { 
-if (autoSlideInterval) clearInterval(autoSlideInterval); 
-autoSlideInterval = setInterval(() => { 
-if (!selectedBook) { 
-goToShelf(currentShelf + 1); 
-} 
-}, 6000); 
-} 
-
-function stopAutoSlide() { 
-if (autoSlideInterval) { 
-clearInterval(autoSlideInterval); 
-autoSlideInterval = null; 
-} 
-} 
-
-function resetAutoSlide() { 
-stopAutoSlide(); 
-setTimeout(startAutoSlide, 8000); 
-} 
-
-setTimeout(startAutoSlide, 2000); 
-
-// PAUSE ΑΥΤΟΜΑΤΗΣ ΠΛΟΗΓΗΣΗΣ ΟΤΑΝ Ο ΧΡΗΣΤΗΣ ΕΙΝΑΙ ΠΑΝΩ 
-viewport.addEventListener('mouseenter', stopAutoSlide); 
-viewport.addEventListener('mouseleave', () => { 
-if (!selectedBook) startAutoSlide(); 
-}); 
-
-// ΚΟΥΜΠΙ "ΔΙΑΒΑΣΤΕ ΤΟ ΒΙΒΛΙΟ" 
-bookLink.addEventListener('click', function(e) { 
-e.preventDefault(); 
-const bookTitle = bookNameSpan.textContent; 
-if (this.href && this.href !== "#") { 
-window.open(this.href, '_blank'); 
-} else { 
-alert(`📚 Το βιβλίο "${bookTitle}" δεν είναι διαθέσιμο για online ανάγνωση.`); 
-} 
-}); 
-
-// ΚΟΥΜΠΙ "ΚΑΤΕΒΑΣΤΕ PDF" 
-downloadLink.addEventListener('click', function(e) { 
-const bookTitle = bookNameSpan.textContent; 
-if (this.href === "#" || !this.href || this.href.trim() === "") { 
-e.preventDefault(); 
-alert(`📄 Το βιβλίο "${bookTitle}" δεν είναι διαθέσιμο.`); 
-return false; 
-} 
-}); 
-
-    
-																</script>
-															</body>
-														</html>
+// Απενεργοποίηση πλήκτρων για προβολή κώδικα
+document.addEventListener('keydown', function(e) {
+    // Ctrl+U (προβολή πηγαίου κώδικα)
+    if (e.ctrlKey && e.key === 'u') {
+        e.preventDefault();
+        return false;
+    }
+    // F12 (Εργαλεία ανάπτυξης)
+    if (e.key === 'F12') {
+        e.preventDefault();
+        return false;
+    }
+    // Ctrl+Shift+I (Εργαλεία ανάπτυξης)
+    if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+        e.preventDefault();
+        return false;
+    }
+    // Ctrl+Shift+C (Προβολή στοιχείου)
+    if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+        e.preventDefault();
+        return false;
+    }
+    // Ctrl+S (αποθήκευση σελίδας)
+    if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        return false;
+    }
+});
+</script>
+</body>
+</html>
