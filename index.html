@@ -236,26 +236,28 @@ body.in-iframe.portrait .shelf-block {
   transform-origin: top center;
 }
 
-/* Auto-scaling για μικρές οθόνες (portrait κινητών) */
-@media (max-width: 500px) {
+/* ΠΑΝΤΑ 2×2 */
+.shelf-block {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 26px;
+}
+
+/* Στο mobile portrait → οριζόντια κύλιση αντί για σμίκρυνση */
+@media (max-width: 600px) {
   .shelf-block {
-    transform: scale(0.75);
+    width: 1200px; /* φυσικό πλάτος 2×2 */
+    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .library {
+    overflow-x: auto;
   }
 }
 
-/* Ακόμη μικρότερες οθόνες */
-@media (max-width: 400px) {
-  .shelf-block {
-    transform: scale(0.65);
-  }
-}
-
-/* Πολύ μικρές οθόνες */
-@media (max-width: 350px) {
-  .shelf-block {
-    transform: scale(0.55);
-  }
-}
  </style>
   <script type="application/ld+json" id="schema-data"></script>
 </head>
@@ -434,6 +436,7 @@ document.addEventListener('keydown', function(e) {
 </body>
 
 </html>
+
 
 
 
