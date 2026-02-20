@@ -406,6 +406,16 @@ document.addEventListener('keydown', function(e) {
 
 <script>
 function updateLayoutForDevice() {
+  const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+
+  if (!isMobile) {
+    // Desktop → πάντα landscape
+    document.body.classList.add("landscape");
+    document.body.classList.remove("portrait");
+    return;
+  }
+
+  // Mobile → orientation-based
   const isPortrait = window.matchMedia("(orientation: portrait)").matches;
   if (isPortrait) {
     document.body.classList.add("portrait");
@@ -416,16 +426,15 @@ function updateLayoutForDevice() {
   }
 }
 
-// αρχική ανίχνευση
 updateLayoutForDevice();
-
-// αλλαγή όταν περιστρέφεται η συσκευή
 window.addEventListener("orientationchange", updateLayoutForDevice);
 window.addEventListener("resize", updateLayoutForDevice);
 </script>
+
 </body>
 
 </html>
+
 
 
 
