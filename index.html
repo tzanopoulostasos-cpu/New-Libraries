@@ -220,17 +220,22 @@
   grid-template-rows: 1fr 1fr;
 }
 
-/* ====== ΣΤΑΘΕΡΗ ΔΙΑΤΑΞΗ 2×2 ΟΤΑΝ Η ΣΕΛΙΔΑ ΦΟΡΤΩΝΕΤΑΙ ΜΕΣΑ ΣΕ IFRAME ====== */
-
-body.in-iframe .shelf-block {
+/* Desktop + mobile landscape → 2×2 */
+body.in-iframe.landscape .shelf-block {
   grid-template-columns: 1fr 1fr !important;
   grid-template-rows: 1fr 1fr !important;
 }
 
-/* Προαιρετικά: απενεργοποίηση animation μέσα στο iframe */
-body.in-iframe .library {
-  animation: none !important;
-} </style>
+/* Mobile portrait → 1×4 */
+body.in-iframe.portrait .shelf-block {
+  grid-template-columns: 1fr !important;
+  grid-template-rows: auto !important;
+}
+/* ΠΑΝΤΑ 2×2 */
+.shelf-block {
+  transform-origin: top center;
+}
+ </style>
   <script type="application/ld+json" id="schema-data"></script>
 </head>
 <body> <body class="in-iframe"> 
